@@ -10,6 +10,7 @@ from tgbot.config import load_config
 from tgbot.handlers.admin import admin_router
 from tgbot.handlers.echo import echo_router
 from tgbot.handlers.user import user_router
+from tgbot.handlers.product import product_router
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.services import broadcaster
 
@@ -33,7 +34,7 @@ async def main():
         format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
     )
     logger.info("Starting bot")
-    config = load_config(".env")
+    config = load_config(".env.dist")
     if config.tg_bot.use_redis:
         storage = RedisStorage.from_url(config.redis.dsn(), key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True))
     else:
@@ -42,15 +43,13 @@ async def main():
     dp = Dispatcher(storage=storage)
 
     for router in [
-        admin_router,
-        user_router,
-        echo_router
+        product_router
     ]:
         dp.include_router(router)
 
     register_global_middlewares(dp, config)
 
-    await on_startup(bot, config.tg_bot.admin_ids)
+#    await on_startup(bot, config.tg_bot.admin_ids)
     await dp.start_polling(bot)
 
 
@@ -58,4 +57,4 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logger.error("Бот був вимкнений!")
+        logger.error("Бот выключен")
