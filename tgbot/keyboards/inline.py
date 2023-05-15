@@ -79,16 +79,16 @@ decoration_keyboard = InlineKeyboardMarkup(
 discount_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text='Нет', callback_data="0-без скидки"),
-            InlineKeyboardButton(text='5%', callback_data="1-5%"),
-            InlineKeyboardButton(text='10%', callback_data="2-10%")
+            InlineKeyboardButton(text='Нет', callback_data="0-1"),
+            InlineKeyboardButton(text='5%', callback_data="1-0.95"),
+            InlineKeyboardButton(text='10%', callback_data="2-0.9")
         ],
         [
-            InlineKeyboardButton(text='15%', callback_data="3-15%"),
-            InlineKeyboardButton(text='20%', callback_data="4-20%"),
-            InlineKeyboardButton(text='25%', callback_data="5-25%")
+            InlineKeyboardButton(text='15%', callback_data="3-0.85"),
+            InlineKeyboardButton(text='20%', callback_data="4-0.8"),
+            InlineKeyboardButton(text='25%', callback_data="5-0.75")
         ]
-    ],
+    ]
 )
 
 offer_keyboard = InlineKeyboardMarkup(
@@ -99,5 +99,13 @@ offer_keyboard = InlineKeyboardMarkup(
         [
             InlineKeyboardButton(text='Да!', callback_data="1-сейчас")
         ]
-    ],
+    ]
+)
+
+final_keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text='Перейти в вк', url="https://vk.com/tit_com77")
+        ]
+    ]
 )
