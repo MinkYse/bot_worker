@@ -70,7 +70,7 @@ decoration_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(text='Да', callback_data="0-с декорациями"),
-            InlineKeyboardButton(text='Нет%', callback_data="1-без декораций")
+            InlineKeyboardButton(text='Нет', callback_data="1-без декораций")
 
         ]
     ]
@@ -91,7 +91,7 @@ discount_keyboard = InlineKeyboardMarkup(
     ],
 )
 
-order_keyboard = InlineKeyboardMarkup(
+offer_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(text='Скорее позже', callback_data="0-не сейчас")
