@@ -8,3 +8,8 @@ messages_from_product = {
     'offer': 'e',
     'final': 'f'
 }
+
+size_variants = {
+    'photos': ['cat1.jpg', 'cat2.jpg'],
+    'messages': ['<b>Здесь красивая надпись</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>', '<b>Здесь другая надпись</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>']
+}

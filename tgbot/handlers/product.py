@@ -1,14 +1,16 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import CommandStart
-from aiogram.filters import StateFilter
+from aiogram.filters import StateFilter, Filter
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, InputMediaPhoto, FSInputFile, InputMedia
 
 from tgbot.keyboards.inline import material_keyboard_inline, size_keyboard, complexity_keyboard, color_keyboard, \
-    decoration_keyboard, discount_keyboard, offer_keyboard, final_keyboard
-from tgbot.messages.product_messages import messages_from_product
+    decoration_keyboard, discount_keyboard, offer_keyboard, final_keyboard, size_choice
+from tgbot.messages.product_messages import messages_from_product, size_variants
 from tgbot.misc.states import WorkState
 from tgbot.misc.prices import PRICE_TABLE
+
+import os
 
 product_router = Router()
 
@@ -22,19 +24,35 @@ async def material_handler(message: Message, state: FSMContext):
 @product_router.callback_query(StateFilter(WorkState.material))
 async def size_handler(callback: CallbackQuery, state: FSMContext):
     data = str(callback.data).split('-')
+    await state.set_state(WorkState.size)
     await state.update_data(material=data[1])
     await state.update_data(material_index=int(data[0]))
-    await state.set_state(WorkState.size)
-    await callback.message.answer(messages_from_product['size'], reply_markup=size_keyboard)
+    file = FSInputFile(fr'tgbot/media/{size_variants["photos"][0]}')
+    await callback.message.answer(messages_from_product['size'])
+    await callback.message.answer_photo(file, caption=size_variants['messages'][0],
+                                        reply_markup=size_choice('-1', '0', '1'),
+                                        parse_mode='html')
 
 
-@product_router.callback_query(StateFilter(WorkState.size))
+@product_router.callback_query(StateFilter(WorkState.size), F.data.endswith('ok'))
 async def complexity_handler(callback: CallbackQuery, state: FSMContext):
     data = str(callback.data).split('-')
     await state.update_data(size=data[1])
     await state.update_data(size_index=int(data[0]))
     await state.set_state(WorkState.complexity)
     await callback.message.answer(messages_from_product['complexity'], reply_markup=complexity_keyboard)
+
+
+@product_router.callback_query(StateFilter(WorkState.size))
+async def size_choice_handler(callback: CallbackQuery, state: FSMContext):
+    index = int(callback.data)
+    if index >= len(size_variants["photos"]):
+        index = 0
+    elif index < 0:
+        index = len(size_variants["photos"]) - 1
+    file2 = InputMedia(media=FSInputFile(fr'tgbot/media/{size_variants["photos"][index]}'),
+                       caption=size_variants['messages'][index], type='photo')
+    await callback.message.edit_media(file2, reply_markup=size_choice(str(index - 1), str(index), str(index + 1)))
 
 
 @product_router.callback_query(StateFilter(WorkState.complexity))

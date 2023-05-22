@@ -7,8 +7,6 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 
 from tgbot.config import load_config
-from tgbot.handlers.admin import admin_router
-from tgbot.handlers.echo import echo_router
 from tgbot.handlers.user import user_router
 from tgbot.handlers.product import product_router
 from tgbot.middlewares.config import ConfigMiddleware

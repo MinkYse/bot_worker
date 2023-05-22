@@ -1,5 +1,24 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from tgbot.messages.product_messages import size_variants
+
+
+def size_choice(call_1, call_2, call_3):
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Назад', callback_data=call_1,
+                                     disable_notification=True if int(call_1) < 0 else False),
+                InlineKeyboardButton(text='Ок', callback_data=f'{call_2}-ok'),
+                InlineKeyboardButton(text='Вперёд', callback_data=call_3,
+                                     disable_notification=True if int(call_3) > len(size_variants['messages']) else False)
+            ]
+        ]
+    )
+    return keyboard
+
+
+
 material_keyboard_inline = InlineKeyboardMarkup(
     inline_keyboard=[
         [
@@ -109,3 +128,4 @@ final_keyboard = InlineKeyboardMarkup(
         ]
     ]
 )
+
