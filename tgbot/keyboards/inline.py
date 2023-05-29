@@ -1,5 +1,5 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from tgbot.messages.product_messages import size_variants, complexity_variants, material_variants
+from tgbot.messages.product_messages import size_variants, complexity_variants
 
 
 def size_choice(call_1, call_2, call_3):
@@ -18,7 +18,7 @@ def size_choice(call_1, call_2, call_3):
     return keyboard
 
 
-def material_choice(call_1, call_2, call_3):
+"""def material_choice(call_1, call_2, call_3):
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -31,7 +31,7 @@ def material_choice(call_1, call_2, call_3):
             ]
         ]
     )
-    return keyboard
+    return keyboard"""
 
 
 def complexity_choice(call_1, call_2, call_3):
@@ -50,7 +50,7 @@ def complexity_choice(call_1, call_2, call_3):
     return keyboard
 
 
-'''material_keyboard_inline = InlineKeyboardMarkup(
+material_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text='Хлопок', callback_data="0-хлопок")],
         [InlineKeyboardButton(text='Кожа/Экокожа', callback_data="1-кожа/экокожа")],
@@ -62,17 +62,6 @@ def complexity_choice(call_1, call_2, call_3):
     ],
 )
 
-
-complexity_keyboard = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [InlineKeyboardButton(text='Очень простой', callback_data="0-Очень простой")],
-        [InlineKeyboardButton(text='Легкий', callback_data="1-Легкий")],
-        [InlineKeyboardButton(text='Средний', callback_data="2-Средний")],
-        [InlineKeyboardButton(text='Сложный', callback_data="3-Сложный")],
-        [InlineKeyboardButton(text='Очень сложный', callback_data="4-Очень сложный")],
-        [InlineKeyboardButton(text='Надпись', callback_data="5-Надпись")]
-    ]
-)'''
 color_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text='Белое', callback_data="0-белое")],

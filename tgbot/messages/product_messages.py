@@ -33,13 +33,6 @@ complexity_variants = {
                  '<b>Очень сложный</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>',
                  '<b>Надпись</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>']
 }
-material_variants = {
-    'photos': ['В4Ф1.jpg', 'В4Ф2.jpg', 'В4Ф3.jpg', 'В4Ф4.jpg', 'В4Ф5.jpg', 'В4Ф6.jpg', 'В4Ф7.jpg'],
-    'messages': ['<b>Хлопок</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>',
-                 '<b>Кожа/экокожа</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>',
-                 '<b>Синтетика</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>',
-                 '<b>Вискоза</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>',
-                 '<b>Лён</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>',
-                 '<b>Деним</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>',
-                 '<b>Другая</b>\n<a href="https://clck.ru/34UYxA">Подробнее!!</a>']
-}
+decoration_photo = [
+    'В4Ф1.jpg', 'В4Ф2.jpg', 'В4Ф3.jpg', 'В4Ф4.jpg', 'В4Ф5.jpg', 'В4Ф6.jpg', 'В4Ф7.jpg'
+]
