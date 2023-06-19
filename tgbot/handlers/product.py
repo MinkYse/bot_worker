@@ -1,4 +1,4 @@
-from aiogram import Router, F, Bot
+from aiogram import Router, F
 from aiogram.filters import CommandStart
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
@@ -14,8 +14,14 @@ product_router = Router()
 
 
 @product_router.message(CommandStart, StateFilter(None))
-async def material_handler(message: Message, state: FSMContext):
-    await message.answer(messages_from_product['material'], reply_markup=material_keyboard)
+async def hello_handler(message: Message, state: FSMContext):
+    await message.answer('<b>Здравствуйте. Этот бот поможет вам сделать заказ.Хотите ли сделать заказ? </b>',
+                         reply_markup=offer_keyboard)
+
+
+@product_router.callback_query(StateFilter(None), F.data == "1-сейчас")
+async def material_handler(callback: CallbackQuery, state: FSMContext):
+    await callback.message.answer(messages_from_product['material'], reply_markup=material_keyboard)
     await state.set_state(WorkState.material)
 
 
@@ -90,6 +96,7 @@ async def decoration_handler(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer(messages_from_product['decoration'], reply_markup=decoration_keyboard)
 
 
+# todo сделать кнопку, что мы ответили ненадо
 @product_router.callback_query(StateFilter(WorkState.decoration))
 async def decoration_handler(callback: CallbackQuery, state: FSMContext):
     data = str(callback.data).split('-')
@@ -97,9 +104,13 @@ async def decoration_handler(callback: CallbackQuery, state: FSMContext):
     await state.update_data(decoration_index=int(data[0]))
     await state.set_state(WorkState.offer)
     await callback.message.answer(messages_from_product['offer'], reply_markup=offer_keyboard)
+    data = str(callback.data).split('-')
+    await state.update_data(ansver=data[1])
+    if F.data == "0-не сейчас":
+        await callback.message.answer()
 
 
-@product_router.callback_query(StateFilter(WorkState.offer))
+@product_router.callback_query(StateFilter(WorkState.offer), F.data == "1-сейчас")
 async def final_handler(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
     await state.clear()
@@ -116,4 +127,7 @@ async def final_handler(callback: CallbackQuery, state: FSMContext):
     if int(data['decoration_index']) == 0:
         price += 300
     print(price)
+    await callback.message.answer(text="Итоговая цена заказа: " + str(price))
     await callback.message.answer(text="наш вк", reply_markup=final_keyboard)
+
+# todo сделать вывод цены покупателю в сообщении
