@@ -4,8 +4,8 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, FSInputFile, InputMedia, InputMediaPhoto
 
-from tgbot.keyboards.inline import color_keyboard, decoration_keyboard, offer_keyboard, final_keyboard, size_choice, \
-    material_keyboard, complexity_choice
+from tgbot.keyboards.inline import color_keyboard, decoration_keyboard, offer_keyboard, size_choice, \
+    material_keyboard, complexity_choice, final_keyboard_constructor
 from tgbot.messages.product_messages import messages_from_product, size_variants, complexity_variants, decoration_photo
 from tgbot.misc.prices import PRICE_TABLE
 from tgbot.misc.states import WorkState
@@ -42,7 +42,7 @@ async def size_handler(callback: CallbackQuery, state: FSMContext):
 async def complexity_handler(callback: CallbackQuery, state: FSMContext):
     data = str(callback.data).split('-')
     await state.set_state(WorkState.complexity)
-    await state.update_data(size=data[1])
+    await state.update_data(size=size_variants['messages'][int(data[0])].replace('/', '').replace('<b>', ''))
     await state.update_data(size_index=int(data[0]))
     file = FSInputFile(fr'tgbot/media/{complexity_variants["photos"][0]}')
     await callback.message.answer(messages_from_product['complexity'])
@@ -66,7 +66,7 @@ async def size_choice_handler(callback: CallbackQuery, state: FSMContext):
 @product_router.callback_query(StateFilter(WorkState.complexity), F.data.endswith('ok'))
 async def color_handler(callback: CallbackQuery, state: FSMContext):
     data = str(callback.data).split('-')
-    await state.update_data(complexity=data[1])
+    await state.update_data(complexity=complexity_variants['messages'][int(data[0])].replace('/', '').replace('<b>', ''))
     await state.update_data(complexity_index=int(data[0]))
     await state.set_state(WorkState.color)
     await callback.message.answer(messages_from_product['color'], reply_markup=color_keyboard)
@@ -106,8 +106,8 @@ async def decoration_handler(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer(messages_from_product['offer'], reply_markup=offer_keyboard)
     data = str(callback.data).split('-')
     await state.update_data(ansver=data[1])
-    if F.data == "0-не сейчас":
-        await callback.message.answer()
+    # if F.data == "0-не сейчас":
+    #     await callback.message.answer()
 
 
 @product_router.callback_query(StateFilter(WorkState.offer), F.data == "1-сейчас")
@@ -126,8 +126,15 @@ async def final_handler(callback: CallbackQuery, state: FSMContext):
     print(price)
     if int(data['decoration_index']) == 0:
         price += 300
-    print(price)
     await callback.message.answer(text="Итоговая цена заказа: " + str(price))
-    await callback.message.answer(text="наш вк", reply_markup=final_keyboard)
+    print(data)
+    await callback.message.answer(text="наш вк", reply_markup=final_keyboard_constructor(
+        price,
+        data['material'],
+        data['size'],
+        data['complexity'],
+        data['color'],
+        data['decoration']
+    ))
 
 # todo сделать вывод цены покупателю в сообщении

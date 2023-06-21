@@ -18,6 +18,19 @@ def size_choice(call_1, call_2, call_3):
     return keyboard
 
 
+def final_keyboard_constructor(*args):
+    data = '-'.join([str(arg) for arg in args])
+    print(f"https://vk.me/club212991771?ref={data}")
+    final_keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Перейти в вк', url=f"https://vk.me/club212991771?ref={data}")
+            ]
+        ]
+    )
+    return  final_keyboard
+
+
 """def material_choice(call_1, call_2, call_3):
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
@@ -65,16 +78,16 @@ material_keyboard = InlineKeyboardMarkup(
 color_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text='Белое', callback_data="0-белое")],
-        [InlineKeyboardButton(text='Скорее светлое', callback_data="1-Скорее светлое")],
-        [InlineKeyboardButton(text='Скорее тёмное', callback_data="3-Скорее тёмное")],
+        [InlineKeyboardButton(text='Скорее светлое', callback_data="1-Скорее_светлое")],
+        [InlineKeyboardButton(text='Скорее тёмное', callback_data="3-Скорее_тёмное")],
         [InlineKeyboardButton(text='Чёрное', callback_data="4-Черное")]
     ]
 )
 
 decoration_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text='Да', callback_data="0-с декорациями")],
-        [InlineKeyboardButton(text='Нет', callback_data="1-без декораций")]
+        [InlineKeyboardButton(text='Да', callback_data="0-C_декорациями")],
+        [InlineKeyboardButton(text='Нет', callback_data="1-Без_декораций")]
     ]
 )
 
@@ -82,13 +95,5 @@ offer_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text='Скорее позже', callback_data="0-не сейчас")],
         [InlineKeyboardButton(text='Да!', callback_data="1-сейчас")]
-    ]
-)
-
-final_keyboard = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [
-            InlineKeyboardButton(text='Перейти в вк', url="https://vk.com/tit_com77")
-        ]
     ]
 )
