@@ -24,7 +24,7 @@ def final_keyboard_constructor(*args):
     final_keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(text='Перейти в вк', url=f"https://vk.me/club212991771?ref={data}")
+                InlineKeyboardButton(text='Перейти в вк', url=f"https://vk.me/annakazakovacustomclothes?ref={data}")
             ]
         ]
     )
